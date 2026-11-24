@@ -10,6 +10,9 @@ const STORAGE_KEYS = {
   ADMIN_TOKEN: 'sash_admin_session_token'
 };
 
+// Official S/ASH Academy Production Google Apps Script Web App Endpoint
+export const DEFAULT_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz7UMtgKzcQMVUDQNgcPRnZlL52vEBYqUrr3aUNmzzcCKjF5GDj9Y9HlfV_lDZsuc9_/exec';
+
 // --- HTTP CLIENT FOR GOOGLE APPS SCRIPT ---
 const sendToAppsScript = async (action, payload = {}, method = 'POST') => {
   const apiUrl = apiService.getApiUrl();
@@ -67,7 +70,9 @@ const sendToAppsScript = async (action, payload = {}, method = 'POST') => {
 export const apiService = {
   // API URL Configuration
   getApiUrl() {
-    return localStorage.getItem(STORAGE_KEYS.API_URL) || (typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.VITE_APPS_SCRIPT_URL : '') || '';
+    return localStorage.getItem(STORAGE_KEYS.API_URL) || 
+      (typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.VITE_APPS_SCRIPT_URL : '') || 
+      DEFAULT_APPS_SCRIPT_URL;
   },
   setApiUrl(url) {
     if (!url) {

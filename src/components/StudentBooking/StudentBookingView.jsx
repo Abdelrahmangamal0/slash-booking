@@ -25,7 +25,11 @@ export default function StudentBookingView() {
         setSlots(res.slots || []);
         setErrorMessage('');
       } else {
-        setErrorMessage(res.error || 'Unable to load available slots.');
+        const rawErr = res.error || '';
+        const displayErr = (rawErr.includes('Admin settings') || rawErr.includes('not configured'))
+          ? 'Unable to connect to the admissions scheduling service. Please retry in a moment.'
+          : rawErr;
+        setErrorMessage(displayErr || 'Unable to load available slots.');
       }
     } catch (err) {
       setErrorMessage(err.message || 'Connection error. Please try again.');
